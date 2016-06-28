@@ -65,6 +65,9 @@
     var container, stats;
     var camera, controls, scene, renderer;
     var cross;
+    var fontsize = 12;
+    var fontface = 'fonts/droid_sans_regular.typeface.json';
+
     init();
     animate();
     function init() {
@@ -172,8 +175,8 @@
     function renderLegend(text, position) {
         var textGeometry;
         var loader = new THREE.FontLoader();
-        loader.load( 'fonts/droid_sans_regular.typeface.json', function ( response ) {
-            textGeometry = new THREE.TextGeometry(text, {font : response, size : 12, height : 1});
+        loader.load( fontface, function ( response ) {
+            textGeometry = new THREE.TextGeometry(text, {font : response, size : fontsize, height : 1});
             var textMaterial = new THREE.MeshBasicMaterial({color : 0xffffff});
             var textMesh = new THREE.Mesh(textGeometry, textMaterial);
             textMesh.position.x = position.x;
@@ -188,6 +191,42 @@
 
 
 
+    }
+
+    function generateRandomValue() {
+        return Math.floor(Math.random() * 10000);
+    }
+
+    function getLargestBoxValue(array) {
+        var largestText = 0;
+
+        for (var i = 0 ; i < array.length; i++) {
+            var canvas = document.createElement('canvas');
+            var context = canvas.getContext('2d');
+            context.font = fontsize + "px " + fontface;
+
+            var metrics = context.measureText(message);
+            var textWidth = metrics.width;
+
+            if (textWidth > largestText) {
+                largestText = textWidth;
+            }
+        }
+        return largestText;
+
+    }
+
+    function getTxtTexture(text) {
+
+        // text color
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        context.font = fontsize + "px " + fontface;
+        context.fillStyle = "rgba(0, 0, 0, 1.0)";
+
+        context.fillText( message, borderThickness, fontsize + borderThickness);
+
+        return context;
     }
 
 </script>
