@@ -130,9 +130,8 @@
     }
 
     function renderCube() {
-        var boxSizeX = 50;
-        var boxSizeY = 50;
-        var boxSizeZ = 50;
+        var boxSizeX, boxSizeY, boxSizeZ = getLargestBoxValue(getLargestBoxValue());
+
         var legendOffset = -80;
 
         var geometry = new THREE.BoxGeometry(boxSizeX, boxSizeY, boxSizeZ);
